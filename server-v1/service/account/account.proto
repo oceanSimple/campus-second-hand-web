@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package accountDbService;
+
+option go_package = "./accountDbService";
+
+message GetByIdRequest {
+  uint64 id = 1;
+}
+
+// 更新string字段请求
+// id: 账户id
+// field: 更新字段
+// value: 更新值
+message UpdateStringRequest {
+  uint64 id = 1;
+  string field = 2;
+  string value = 3;
+}
+
+// 更新string字段请求
+message UpdateIntRequest {
+  uint64 id = 1;
+  string field = 2;
+  int64 value = 3;
+}
+
+message Account {
+  uint64 id = 1;
+  string account = 2;
+  string password = 3;
+  string phone = 4;
+  string email = 5;
+  string nickname = 6;
+  uint32 age = 7;
+  uint32 gender = 8;
+  string campus = 9;
+  string dormitory = 10;
+}
+
+message BoolResp {
+  bool result = 1;
+}
+
+service AccountService {
+  // 根据id获取账户信息
+  rpc GetAccountById(GetByIdRequest) returns (Account);
+  // 创建账户
+  rpc CreateAccount(Account) returns (BoolResp);
+  // 更新string类型字段
+  rpc UpdateAccountString(UpdateStringRequest) returns (BoolResp);
+  // 更新int类型字段
+  rpc UpdateAccountInt(UpdateIntRequest) returns (BoolResp);
+  // 删除账户
+  rpc DeleteAccountById(GetByIdRequest) returns (BoolResp);
+}
+
+// goctl rpc protoc account.proto --go_out=./pb --go-grpc_out=./pb --zrpc_out=.

@@ -27,9 +27,9 @@ func GetSqlConnect(config SqlConfig) *gorm.DB {
 	if err != nil {
 		panic("fail to connect to sql database, error=" + err.Error())
 	}
-
+	// 设置会话时区
+	_db.Exec("SET time_zone = '+08:00'")
 	sqlDB, _ := _db.DB()
-
 	sqlDB.SetMaxIdleConns(20)  // Sets the maximum number of connections in the free connection pool
 	sqlDB.SetMaxOpenConns(100) // Sets the maximum number of open database connections
 

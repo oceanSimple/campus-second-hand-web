@@ -1,0 +1,9 @@
+syntax = "v1"
+
+info(
+    title: "common"
+    desc: "公共的api请求参数和响应参数"
+    author: "ocean"
+    email: "1252074183@qq.com"
+    time: "2024-04-07"
+)
