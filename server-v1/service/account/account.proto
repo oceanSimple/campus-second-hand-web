@@ -8,6 +8,10 @@ message GetByIdRequest {
   uint64 id = 1;
 }
 
+message GetByAccountRequest {
+  string account = 1;
+}
+
 // 更新string字段请求
 // id: 账户id
 // field: 更新字段
@@ -45,6 +49,8 @@ message BoolResp {
 service AccountService {
   // 根据id获取账户信息
   rpc GetAccountById(GetByIdRequest) returns (Account);
+  // 根据账号获取账户信息
+  rpc GetAccountByAccount(GetByAccountRequest) returns (Account);
   // 创建账户
   rpc CreateAccount(Account) returns (BoolResp);
   // 更新string类型字段

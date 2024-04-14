@@ -24,6 +24,8 @@ const _ = grpc.SupportPackageIsVersion7
 type AccountServiceClient interface {
 	// 根据id获取账户信息
 	GetAccountById(ctx context.Context, in *GetByIdRequest, opts ...grpc.CallOption) (*Account, error)
+	// 根据账号获取账户信息
+	GetAccountByAccount(ctx context.Context, in *GetByAccountRequest, opts ...grpc.CallOption) (*Account, error)
 	// 创建账户
 	CreateAccount(ctx context.Context, in *Account, opts ...grpc.CallOption) (*BoolResp, error)
 	// 更新string类型字段
@@ -45,6 +47,15 @@ func NewAccountServiceClient(cc grpc.ClientConnInterface) AccountServiceClient {
 func (c *accountServiceClient) GetAccountById(ctx context.Context, in *GetByIdRequest, opts ...grpc.CallOption) (*Account, error) {
 	out := new(Account)
 	err := c.cc.Invoke(ctx, "/accountDbService.AccountService/GetAccountById", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *accountServiceClient) GetAccountByAccount(ctx context.Context, in *GetByAccountRequest, opts ...grpc.CallOption) (*Account, error) {
+	out := new(Account)
+	err := c.cc.Invoke(ctx, "/accountDbService.AccountService/GetAccountByAccount", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -93,6 +104,8 @@ func (c *accountServiceClient) DeleteAccountById(ctx context.Context, in *GetByI
 type AccountServiceServer interface {
 	// 根据id获取账户信息
 	GetAccountById(context.Context, *GetByIdRequest) (*Account, error)
+	// 根据账号获取账户信息
+	GetAccountByAccount(context.Context, *GetByAccountRequest) (*Account, error)
 	// 创建账户
 	CreateAccount(context.Context, *Account) (*BoolResp, error)
 	// 更新string类型字段
@@ -110,6 +123,9 @@ type UnimplementedAccountServiceServer struct {
 
 func (UnimplementedAccountServiceServer) GetAccountById(context.Context, *GetByIdRequest) (*Account, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAccountById not implemented")
+}
+func (UnimplementedAccountServiceServer) GetAccountByAccount(context.Context, *GetByAccountRequest) (*Account, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAccountByAccount not implemented")
 }
 func (UnimplementedAccountServiceServer) CreateAccount(context.Context, *Account) (*BoolResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateAccount not implemented")
@@ -150,6 +166,24 @@ func _AccountService_GetAccountById_Handler(srv interface{}, ctx context.Context
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(AccountServiceServer).GetAccountById(ctx, req.(*GetByIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AccountService_GetAccountByAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetByAccountRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AccountServiceServer).GetAccountByAccount(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/accountDbService.AccountService/GetAccountByAccount",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AccountServiceServer).GetAccountByAccount(ctx, req.(*GetByAccountRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -236,6 +270,10 @@ var AccountService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAccountById",
 			Handler:    _AccountService_GetAccountById_Handler,
+		},
+		{
+			MethodName: "GetAccountByAccount",
+			Handler:    _AccountService_GetAccountByAccount_Handler,
 		},
 		{
 			MethodName: "CreateAccount",

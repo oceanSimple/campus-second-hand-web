@@ -10,6 +10,7 @@
         <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
+      <time-zone>Asia/Shanghai</time-zone>
     </data-source>
   </component>
 </project>

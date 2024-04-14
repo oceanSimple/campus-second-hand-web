@@ -15,6 +15,7 @@ import (
 type (
 	Account             = accountDbService.Account
 	BoolResp            = accountDbService.BoolResp
+	GetByAccountRequest = accountDbService.GetByAccountRequest
 	GetByIdRequest      = accountDbService.GetByIdRequest
 	UpdateIntRequest    = accountDbService.UpdateIntRequest
 	UpdateStringRequest = accountDbService.UpdateStringRequest
@@ -22,6 +23,8 @@ type (
 	AccountService interface {
 		// 根据id获取账户信息
 		GetAccountById(ctx context.Context, in *GetByIdRequest, opts ...grpc.CallOption) (*Account, error)
+		// 根据账号获取账户信息
+		GetAccountByAccount(ctx context.Context, in *GetByAccountRequest, opts ...grpc.CallOption) (*Account, error)
 		// 创建账户
 		CreateAccount(ctx context.Context, in *Account, opts ...grpc.CallOption) (*BoolResp, error)
 		// 更新string类型字段
@@ -47,6 +50,12 @@ func NewAccountService(cli zrpc.Client) AccountService {
 func (m *defaultAccountService) GetAccountById(ctx context.Context, in *GetByIdRequest, opts ...grpc.CallOption) (*Account, error) {
 	client := accountDbService.NewAccountServiceClient(m.cli.Conn())
 	return client.GetAccountById(ctx, in, opts...)
+}
+
+// 根据账号获取账户信息
+func (m *defaultAccountService) GetAccountByAccount(ctx context.Context, in *GetByAccountRequest, opts ...grpc.CallOption) (*Account, error) {
+	client := accountDbService.NewAccountServiceClient(m.cli.Conn())
+	return client.GetAccountByAccount(ctx, in, opts...)
 }
 
 // 创建账户

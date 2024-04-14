@@ -28,6 +28,12 @@ func (s *AccountServiceServer) GetAccountById(ctx context.Context, in *accountDb
 	return l.GetAccountById(in)
 }
 
+// 根据账号获取账户信息
+func (s *AccountServiceServer) GetAccountByAccount(ctx context.Context, in *accountDbService.GetByAccountRequest) (*accountDbService.Account, error) {
+	l := logic.NewGetAccountByAccountLogic(ctx, s.svcCtx)
+	return l.GetAccountByAccount(in)
+}
+
 // 创建账户
 func (s *AccountServiceServer) CreateAccount(ctx context.Context, in *accountDbService.Account) (*accountDbService.BoolResp, error) {
 	l := logic.NewCreateAccountLogic(ctx, s.svcCtx)

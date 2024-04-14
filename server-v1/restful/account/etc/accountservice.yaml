@@ -1,0 +1,11 @@
+Name: accountService
+Host: 0.0.0.0
+Port: 8001
+Auth:
+  AccessSecret: 1234567890fa
+  AccessExpire: 3600
+AccountRpc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: account.rpc
