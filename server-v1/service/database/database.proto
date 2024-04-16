@@ -1,0 +1,99 @@
+// goctl rpc protoc database.proto --go_out=./pb --go-grpc_out=./pb --zrpc_out=. -m
+syntax = "proto3";
+
+package databaseService;
+
+option go_package = "./databaseService";
+
+message IdRequest {
+  uint64 id = 1;
+}
+
+message AccountRequest {
+  string account = 1;
+}
+
+// 更新string字段请求
+// id: 账户id
+// field: 更新字段
+// value: 更新值
+message UpdateStringRequest {
+  uint64 id = 1;
+  string field = 2;
+  string value = 3;
+}
+
+// 更新int字段请求
+message UpdateIntRequest {
+  uint64 id = 1;
+  string field = 2;
+  int64 value = 3;
+}
+
+message BoolResp {
+  bool result = 1;
+}
+
+message Account {
+  uint64 id = 1;
+  string account = 2;
+  string password = 3;
+  string phone = 4;
+  string email = 5;
+  string nickname = 6;
+  uint32 age = 7;
+  uint32 gender = 8;
+  string campus = 9;
+  string dormitory = 10;
+}
+
+service AccountService {
+  // 根据id获取账户信息
+  rpc GetAccountById(IdRequest) returns (Account);
+  // 根据账号获取账户信息
+  rpc GetAccountByAccount(AccountRequest) returns (Account);
+  // 创建账户
+  rpc CreateAccount(Account) returns (BoolResp);
+  // 更新string类型字段
+  rpc UpdateAccountString(UpdateStringRequest) returns (BoolResp);
+  // 更新int类型字段
+  rpc UpdateAccountInt(UpdateIntRequest) returns (BoolResp);
+  // 删除账户
+  rpc DeleteAccountById(IdRequest) returns (BoolResp);
+}
+
+message Product {
+  uint64 id = 1;
+  string title = 2;
+  string description = 3;
+  double price = 4;
+  uint64 stock = 5;
+  string campus = 6;
+  string address = 7;
+  uint64 sellerId = 8;
+  string picture1 = 10;
+  string picture2 = 11;
+  string picture3 = 12;
+  uint64 type1 = 13;
+  uint64 type2 = 14;
+  string others = 15;
+}
+
+service ProductService {
+  // 根据id获取商品信息
+  rpc GetProductById(IdRequest) returns (Product);
+}
+
+message Order {
+  uint64 id = 1;
+  uint64 productId = 2;
+  uint64 buyerId = 3;
+  uint64 sellerId = 4;
+  double price = 5;
+  string title = 6;
+}
+
+service OrderService {
+  // 根据id获取订单信息
+  rpc GetOrderById(IdRequest) returns (Order);
+}

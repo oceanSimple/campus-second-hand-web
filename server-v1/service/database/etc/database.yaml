@@ -1,0 +1,17 @@
+Name: database.rpc
+ListenOn: 0.0.0.0:9001
+Etcd:
+  Hosts:
+    - 127.0.0.1:2379
+  Key: database.rpc
+Mysql:
+  Host: 111.229.78.126
+  Port: 3306
+  Username: root
+  Password: root
+  Dbname: website
+Log:
+  ServiceName: account-db-service
+  Encoding: plain
+  TimeFormat: 2006-01-02 15:04:05
+  Stat: false

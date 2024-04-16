@@ -59,6 +59,15 @@ services:
     networks:
       apisix:
 
+  apisix-dashboard:
+    container_name: apisix-dashboard
+    image: apache/apisix-dashboard
+    restart: always
+    volumes:
+      - ./dashboard_conf/conf.yaml:/usr/local/apisix-dashboard/conf/conf.yaml
+    ports:
+      - "9000:9000"
+
 networks:
   apisix:
     driver: bridge

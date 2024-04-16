@@ -24,6 +24,3 @@ create table account
 insert into account (account, password, phone, email)
 values ('admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', '12345678901',
         '@email.com');
-
-SELECT @@global.time_zone;
-select @@session.time_zone;
