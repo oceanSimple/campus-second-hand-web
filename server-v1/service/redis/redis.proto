@@ -1,0 +1,61 @@
+// goctl rpc protoc redis.proto --go_out=./pb --go-grpc_out=./pb --zrpc_out=. -m
+syntax = "proto3";
+
+package redisService;
+
+option go_package = "./redisService";
+import "google/protobuf/timestamp.proto";
+
+message IdRequest {
+  uint64 id = 1;
+}
+
+message AddItemRequest {
+  uint64 userId = 1; // user id
+  uint64 productId = 2; // product id
+  string item = 3; // item json string
+}
+
+message RemoveItemRequest {
+  uint64 userId = 1; // user id
+  uint64 productId = 2; // product id
+}
+
+message RemoveItemsRequest {
+  uint64 userId = 1; // user id
+  repeated uint64 productIds = 2; // product ids
+}
+
+message ItemsResponse {
+  repeated string items = 1;
+}
+
+message ResultResponse {
+  uint64 result = 1; // 影响行数
+}
+
+//message ShoppingCartItem {
+//  uint64 productId = 1;
+//  string picture = 2;
+//  string title = 3;
+//  int64 stock = 4;
+//  double price = 5;
+//  int64 quantity = 6;
+//  double total = 7;
+//  google.protobuf.Timestamp time = 8;
+//}
+
+
+service ShoppingCartService {
+  // 获取用户的所有购物车商品
+  rpc GetItems(IdRequest) returns (ItemsResponse);
+  // 添加购物车商品
+  rpc AddItem(AddItemRequest) returns (ResultResponse);
+  // 更新购物车商品
+  rpc UpdateItem(AddItemRequest) returns (ResultResponse);
+  // 删除购物车商品
+  rpc RemoveItem(RemoveItemRequest) returns (ResultResponse);
+  // 批量删除购物车商品
+  rpc RemoveItems(RemoveItemsRequest) returns (ResultResponse);
+}
+

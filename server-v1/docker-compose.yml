@@ -3,11 +3,11 @@ version: '3'
 services:
   redis:
     image: redis:latest
-    container_name: redis-container
+    container_name: myRedis-container
     ports:
       - "6379:6379"
     volumes:
-      - /path/on/host:/var/lib/redis
+      - /path/on/host:/var/lib/myRedis
 
   # 注意mysql8以上，默认不允许非主机使用root权限登录，需要修改配置文件
   # 首先使用docker exec -it mysql_server mysql -u root -p 进入mysql
