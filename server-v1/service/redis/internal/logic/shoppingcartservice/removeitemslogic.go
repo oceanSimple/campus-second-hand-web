@@ -23,7 +23,11 @@ func NewRemoveItemsLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Remov
 }
 
 func (l *RemoveItemsLogic) RemoveItems(in *redisService.RemoveItemsRequest) (*redisService.ResultResponse, error) {
-	var rmLogic = RemoveItemLogic{}
+	var rmLogic = RemoveItemLogic{
+		ctx:    l.ctx,
+		svcCtx: l.svcCtx,
+		Logger: l.Logger,
+	}
 	var result uint64
 	var err error
 	for i := 0; i < len(in.ProductIds); i++ {

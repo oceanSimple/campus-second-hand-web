@@ -1,34 +1,33 @@
-package shoppingcartservicelogic
+package logic
 
 import (
 	"context"
 
-	"server-v1/service/redis/internal/svc"
-	"server-v1/service/redis/pb/redisService"
+	"server-v1/restful/shoppingCart/internal/svc"
+	"server-v1/restful/shoppingCart/internal/types"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
 type UpdateItemLogic struct {
+	logx.Logger
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
-	logx.Logger
 }
 
 func NewUpdateItemLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UpdateItemLogic {
 	return &UpdateItemLogic{
+		Logger: logx.WithContext(ctx),
 		ctx:    ctx,
 		svcCtx: svcCtx,
-		Logger: logx.WithContext(ctx),
 	}
 }
 
-func (l *UpdateItemLogic) UpdateItem(in *redisService.AddItemRequest) (*redisService.ResultResponse, error) {
-	// 修改和添加逻辑一样
+func (l *UpdateItemLogic) UpdateItem(req *types.AddReq) (resp *types.CountResp, err error) {
 	logic := AddItemLogic{
+		Logger: l.Logger,
 		ctx:    l.ctx,
 		svcCtx: l.svcCtx,
-		Logger: l.Logger,
 	}
-	return logic.AddItem(in)
+	return logic.AddItem(req)
 }

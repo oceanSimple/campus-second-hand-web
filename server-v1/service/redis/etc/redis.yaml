@@ -1,11 +1,16 @@
-Name: myRedis.rpc
-ListenOn: 0.0.0.0:8080
+Name: redis.rpc
+ListenOn: 0.0.0.0:9002
 Etcd:
   Hosts:
     - 127.0.0.1:2379
-  Key: myRedis.rpc
-Redis:
+  Key: redis.rpc
+RedisConfig:
   Host: 111.229.78.126
   Port: 6379
   Password:
   Db: 0
+Log:
+  ServiceName: account-db-service
+  Encoding: plain
+  TimeFormat: 2006-01-02 15:04:05
+  Stat: false

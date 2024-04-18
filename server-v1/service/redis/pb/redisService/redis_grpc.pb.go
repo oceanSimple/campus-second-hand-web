@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.20.3
-// source: myRedis.proto
+// source: redis.proto
 
 package redisService
 
@@ -22,10 +22,15 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ShoppingCartServiceClient interface {
+	// 获取用户的所有购物车商品
 	GetItems(ctx context.Context, in *IdRequest, opts ...grpc.CallOption) (*ItemsResponse, error)
+	// 添加购物车商品
 	AddItem(ctx context.Context, in *AddItemRequest, opts ...grpc.CallOption) (*ResultResponse, error)
+	// 更新购物车商品
 	UpdateItem(ctx context.Context, in *AddItemRequest, opts ...grpc.CallOption) (*ResultResponse, error)
+	// 删除购物车商品
 	RemoveItem(ctx context.Context, in *RemoveItemRequest, opts ...grpc.CallOption) (*ResultResponse, error)
+	// 批量删除购物车商品
 	RemoveItems(ctx context.Context, in *RemoveItemsRequest, opts ...grpc.CallOption) (*ResultResponse, error)
 }
 
@@ -86,10 +91,15 @@ func (c *shoppingCartServiceClient) RemoveItems(ctx context.Context, in *RemoveI
 // All implementations must embed UnimplementedShoppingCartServiceServer
 // for forward compatibility
 type ShoppingCartServiceServer interface {
+	// 获取用户的所有购物车商品
 	GetItems(context.Context, *IdRequest) (*ItemsResponse, error)
+	// 添加购物车商品
 	AddItem(context.Context, *AddItemRequest) (*ResultResponse, error)
+	// 更新购物车商品
 	UpdateItem(context.Context, *AddItemRequest) (*ResultResponse, error)
+	// 删除购物车商品
 	RemoveItem(context.Context, *RemoveItemRequest) (*ResultResponse, error)
+	// 批量删除购物车商品
 	RemoveItems(context.Context, *RemoveItemsRequest) (*ResultResponse, error)
 	mustEmbedUnimplementedShoppingCartServiceServer()
 }
@@ -245,5 +255,5 @@ var ShoppingCartService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "myRedis.proto",
+	Metadata: "redis.proto",
 }

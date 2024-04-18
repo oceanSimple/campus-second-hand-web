@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-
 	"server-v1/service/database/internal/config"
 	accountserviceServer "server-v1/service/database/internal/server/accountservice"
 	orderserviceServer "server-v1/service/database/internal/server/orderservice"
@@ -36,6 +35,7 @@ func main() {
 			reflection.Register(grpcServer)
 		}
 	})
+
 	defer s.Stop()
 
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)

@@ -1,0 +1,75 @@
+syntax = "v1"
+
+// goctl api go -api shoppingCart.api -dir .
+info(
+    title: "shoppingCart"
+    author: "ocean"
+    email: "1252074183@qq.com"
+    time: "2024-04-17"
+)
+
+type ShoppingCartItem {
+    ProductId uint64 `json:"productId"`
+    Picture string `json:"picture"`
+    Title string `json:"title"`
+    Stock uint64 `json:"stock"`
+    Price float64 `json:"price"`
+    Quantity uint64 `json:"quantity"`
+    Total float64 `json:"total"`
+}
+
+// 请求参数
+type (
+    IdReq {
+        Id uint64 `path:"id"`
+    }
+    AddReq {
+        UserId uint64 `json:"userId"`
+        ProductId uint64 `json:"productId"`
+        ShoppingCartItem string `json:"shoppingCartItem"`
+    }
+    DeleteItemReq {
+        UserId uint64 `json:"userId"`
+        ProductId uint64 `json:"productId"`
+    }
+    DeleteItemsReq {
+        UserId uint64 `json:"userId"`
+        ProductId []uint64 `json:"productId"`
+    }
+)
+
+// 返回参数
+type (
+    GetItemsResp {
+        Items []string `json:"items"`
+    }
+    CountResp {
+        Count uint64 `json:"count"`
+    }
+)
+
+@server(
+    prefix: /shoppingCart/v1
+)
+service ShoppingCartService {
+    // 查询用户购物车商品
+    @handler GetItems
+    get /items/:id (IdReq) returns (GetItemsResp)
+
+    // 添加商品到购物车
+    @handler AddItem
+    post /item (AddReq) returns (CountResp)
+
+    // 更新购物车商品
+    @handler UpdateItem
+    put /item (AddReq) returns (CountResp)
+
+    // 删除购物车商品
+    @handler DeleteItem
+    delete /item (DeleteItemReq) returns (CountResp)
+
+    // 批量删除购物车商品
+    @handler DeleteItems
+    delete /items (DeleteItemsReq) returns (CountResp)
+}
+

@@ -1,0 +1,8 @@
+Name: ShoppingCartService
+Host: 0.0.0.0
+Port: 8002
+RedisRpc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: redis.rpc
